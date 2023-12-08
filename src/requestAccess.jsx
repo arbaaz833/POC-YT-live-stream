@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -7,6 +7,19 @@ import { CLIENT_ID, REDIRECT_URI } from "./config/config";
 
 function App() {
   const linkRef = useRef();
+
+  useEffect(() => {
+    console.log(
+      "URL",
+      `https://accounts.google.com/o/oauth2/v2/auth?
+    scope=https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.channel-memberships.creator&
+    state=state_parameter_passthrough_value&
+    redirect_uri=${REDIRECT_URI}&
+    response_type=token&
+    client_id=${CLIENT_ID}`
+    );
+  }, []);
+
   const reqAccess = () => {
     // await liveStreamService.requestAccess();
     console.log("SSSSSSSSSS");
@@ -27,7 +40,7 @@ function App() {
       <div className="card">
         <a
           href={`https://accounts.google.com/o/oauth2/v2/auth?
-        scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.readonly&
+        scope=https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.channel-memberships.creator&
         state=state_parameter_passthrough_value&
         redirect_uri=${REDIRECT_URI}&
         response_type=token&
