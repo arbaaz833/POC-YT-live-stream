@@ -11,12 +11,12 @@ function App() {
   useEffect(() => {
     console.log(
       "URL",
-      `https://accounts.google.com/o/oauth2/v2/auth?
-    scope=https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.channel-memberships.creator&
-    state=state_parameter_passthrough_value&
-    redirect_uri=${REDIRECT_URI}&
-    response_type=token&
-    client_id=${CLIENT_ID}`
+      encodeURI(`https://accounts.google.com/o/oauth2/v2/auth?
+        scope=https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.channel-memberships.creator&
+        state=state_parameter_passthrough_value&
+        redirect_uri=${REDIRECT_URI}&
+        response_type=token&
+        client_id=${CLIENT_ID}`)
     );
   }, []);
 
@@ -39,12 +39,9 @@ function App() {
       <h1>Vite + React</h1>
       <div className="card">
         <a
-          href={`https://accounts.google.com/o/oauth2/v2/auth?
-        scope=https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.channel-memberships.creator&
-        state=state_parameter_passthrough_value&
-        redirect_uri=${REDIRECT_URI}&
-        response_type=token&
-        client_id=${CLIENT_ID}`}
+          href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.force-ssl%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutubepartner%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.upload%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.channel-memberships.creator&response_type=token&state=state_parameter_passthrough_value&redirect_uri=${encodeURIComponent(
+            REDIRECT_URI
+          )}&client_id=${encodeURIComponent(CLIENT_ID)}`}
           target="_blank"
           style={{ display: "none" }}
           ref={linkRef}
