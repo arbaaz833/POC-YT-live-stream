@@ -14,6 +14,7 @@ function App() {
     const params = new URLSearchParams("?" + hash.slice(1));
     if (params.get("access_token")) {
       localStorage.setItem("token", params.get("access_token"));
+      console.log("HERE");
       redirect("/stream");
     }
   }, []);
