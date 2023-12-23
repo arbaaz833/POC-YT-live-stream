@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import ReqAccess from "./requestAccess.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Confirmed from "./pages/confirmed/confirmed.jsx";
+import Stream from "./pages/stream/stream.jsx";
 
 const router = createBrowserRouter([
   {
@@ -11,8 +11,8 @@ const router = createBrowserRouter([
     element: <ReqAccess />,
   },
   {
-    path: "confirmed",
-    element: <Confirmed />,
+    path: "stream",
+    element: <Stream />,
   },
 ]);
 
