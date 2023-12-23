@@ -8,7 +8,7 @@ export default function Stream() {
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
-  const WsUrl = "https://8a8a-175-107-214-32.ngrok-free.app:80";
+  const WsUrl = "https://c476-175-107-214-32.ngrok-free.app ";
   const youtubeUrl = "rtmps://x.rtmps.youtube.com/live2/svuj-f9xq-ycgx-bjzj-ef9y";
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
