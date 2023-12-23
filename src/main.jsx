@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     element: <ReqAccess />,
   },
   {
-    path: "stream",
+    path: "/stream",
     element: <Stream />,
   },
 ]);
