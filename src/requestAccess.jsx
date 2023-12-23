@@ -4,18 +4,19 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import liveStreamService from "./services";
 import { CLIENT_ID, REDIRECT_URI } from "./config/config";
-import { redirect, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function App() {
   const linkRef = useRef();
   const { hash } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams("?" + hash.slice(1));
     if (params.get("access_token")) {
       localStorage.setItem("token", params.get("access_token"));
       console.log("HERE");
-      redirect("/stream");
+      navigate("/stream");
     }
   }, []);
 
