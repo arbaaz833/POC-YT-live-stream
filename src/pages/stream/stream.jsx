@@ -5,11 +5,14 @@ import { io } from "socket.io-client";
 
 export default function Stream() {
   const [stream, setStream] = useState(undefined);
+  const [eventId, setEventId] = useState(undefined);
+  const [streamId, setStreamId] = useState(undefined);
+  const [isLive, setIsLive] = useState(undefined);
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
   const WsUrl = "https://8c4e-175-107-214-32.ngrok-free.app";
-  const youtubeUrl = "rtmps://x.rtmps.youtube.com/live2/svuj-f9xq-ycgx-bjzj-ef9y";
+  const streamUrl = `https://youtube.com/live/${eventId}`;
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
   let liveStream;
@@ -46,16 +49,32 @@ export default function Stream() {
       });
   }, []);
 
+  const makeTransition = useCallback(
+    async (status) => {
+      try {
+        const data = {
+          broadcastStatus: status,
+          id: eventId,
+        };
+        await liveStreamService.transitionEvent(data);
+        if (status === "live") setIsLive(true);
+      } catch (e) {
+        console.log("e: ", e);
+      }
+    },
+    [eventId, streamId]
+  );
+
   const startStream = useCallback(async () => {
     try {
       const eventData = {
         snippet: {
           title: "Test broadcast",
           scheduledStartTime: new Date(Date.now() + 300000).toISOString(),
+          description: "abcd",
         },
         status: {
           privacyStatus: "unlisted",
-          selfDeclaredMadeForKids: false,
         },
         contentDetails: {
           recordFromStart: true,
@@ -84,6 +103,9 @@ export default function Stream() {
 
       const event = await liveStreamService.addBroadcast(eventData);
       const addedliveStream = await liveStreamService.addStream(liveStreamData);
+      setEventId(event.id);
+      setStreamId(addedliveStream.id);
+      setStreamName(addedliveStream.cdn.ingestionInfo.streamName);
       await liveStreamService.bindStreamWithEvent(event.id, addedliveStream.id);
       liveStream = videoElem.current.captureStream(30); // 30 FPS
       liveStreamRecorder = new MediaRecorder(liveStream, {
@@ -110,13 +132,32 @@ export default function Stream() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        flexDirection: "column",
         gap: "20px",
       }}
     >
+      {isLive ? <button>{streamUrl}</button> : null}
+
       <video style={{ width: "70vw", height: "70vh" }} ref={videoElem} muted></video>
 
       <button disabled={!stream} onClick={startStream}>
         Start Stream
+      </button>
+      <button
+        disabled={!eventId || !streamId}
+        onClick={() => {
+          makeTransition("live");
+        }}
+      >
+        GO LIVE
+      </button>
+      <button
+        disabled={!isLive}
+        onClick={() => {
+          makeTransition("complete");
+        }}
+      >
+        END STREAM
       </button>
     </div>
   );

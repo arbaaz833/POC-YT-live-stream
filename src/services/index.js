@@ -4,9 +4,26 @@ import { CLIENT_ID, REDIRECT_URI } from "../config/config";
 const liveStreamService = {
   addBroadcast: async (data) => {
     try {
-      let event = await axios({ method: "POST", data: data, url: "/youtube/v3/liveBroadcasts?part=id,snippet" });
+      let event = await axios({
+        method: "POST",
+        data: data,
+        url: "/youtube/v3/liveBroadcasts?part=id,snippet,status,contentDetails",
+      });
       console.log("EVENT", event.data);
       return event.data;
+    } catch (e) {
+      console.log("e: ", e);
+    }
+  },
+  transitionEvent: async (data) => {
+    try {
+      await axios({
+        method: "POST",
+        data: data,
+        url: `/youtube/v3/liveBroadcasts/transition?part=id${data.id ? "&id=" + data.id : ""}${
+          data.broadcastStatus ? "&broadcastStatus=" + data.broadcastStatus : ""
+        }`,
+      });
     } catch (e) {
       console.log("e: ", e);
     }
