@@ -6,7 +6,7 @@ import liveStreamService from "./services";
 import { CLIENT_ID, REDIRECT_URI } from "./config/config";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function App() {
+function ReqAccess() {
   const linkRef = useRef();
   const { hash } = useLocation();
   const navigate = useNavigate();
@@ -53,4 +53,4 @@ function App() {
   );
 }
 
-export default App;
+export default ReqAccess;
