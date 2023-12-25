@@ -144,7 +144,7 @@ export default function Stream() {
         gap: "20px",
       }}
     >
-      {isLive ? <button>{streamUrl}</button> : null}
+      {isLive ? <p>{streamUrl}</p> : null}
 
       <video style={{ width: "70vw", height: "70vh" }} ref={videoElem} muted></video>
 
