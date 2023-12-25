@@ -26,15 +26,15 @@ function ReqAccess() {
 
   return (
     <>
-      <div>
+      {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
-      </div>
-      <h1>Vite + React</h1>
+      </div> */}
+      <h1>Live stream POC</h1>
       <div className="card">
         <a
           href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.force-ssl%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutubepartner%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.upload%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.channel-memberships.creator&response_type=token&state=state_parameter_passthrough_value&redirect_uri=${encodeURIComponent(
@@ -44,11 +44,11 @@ function ReqAccess() {
           ref={linkRef}
         ></a>
         <button onClick={reqAccess}>Grant Access</button>
-        <p>
+        {/* <p>
           Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        </p> */}
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      {/* <p className="read-the-docs">Click on the Vite and React logos to learn more</p> */}
     </>
   );
 }
