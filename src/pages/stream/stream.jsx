@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import liveStreamService from "../../services";
 import { io } from "socket.io-client";
+import { notify } from "../../notifications";
 
 export default function Stream() {
   const [stream, setStream] = useState(undefined);
@@ -58,6 +59,11 @@ export default function Stream() {
         };
         await liveStreamService.transitionEvent(data);
         if (status === "live") setIsLive(true);
+        else if (status === "complete") {
+          setIsLive(false);
+          ws.current.close();
+        }
+        notify.success(`Stream is ${status === "live" ? "live" : "ended"}`);
       } catch (e) {
         console.log("e: ", e);
       }
@@ -118,9 +124,11 @@ export default function Stream() {
         console.log("send data", e.data);
       };
       // Start recording, and dump data every second
-      liveStreamRecorder.start(200);
+      liveStreamRecorder.start(1000);
+      notify.success("Stream created successfully");
     } catch (e) {
       console.log("e: ", e);
+      notify.error("error");
     }
   }, [stream]);
 
