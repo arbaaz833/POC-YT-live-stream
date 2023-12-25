@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import "./App.css";
+import "./_App.css";
 import liveStreamService from "./services";
 import { CLIENT_ID, REDIRECT_URI } from "./config/config";
 import { useNavigate, useLocation } from "react-router-dom";
