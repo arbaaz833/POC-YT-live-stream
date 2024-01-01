@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./_App.css";
 import liveStreamService from "./services";
-import { CLIENT_ID, REDIRECT_URI } from "./config/config";
+import { AUTHURL, CLIENT_ID, REDIRECT_URI } from "./config/config";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useGetAccess } from "./hooks/useGetAccess";
 
@@ -11,7 +11,7 @@ function ReqAccess() {
   const linkRef = useRef();
   const { hash } = useLocation();
   const navigate = useNavigate();
-  const getAuth = useGetAccess(true);
+  const getAuth = useGetAccess();
 
   useEffect(() => {
     const params = new URLSearchParams("?" + hash.slice(1));
@@ -20,7 +20,8 @@ function ReqAccess() {
       console.log("HERE");
       if (window.opener) {
         console.log("window.opener: ", window.opener);
-        window.opener.postMessage(params.get("access_token"));
+        localStorage.setItem("token", params.get("access_token"));
+        if (params.get("state") === "redirect") window.opener.postMessage("redirect");
         window.close();
       }
       // navigate("/stream");
@@ -50,7 +51,13 @@ function ReqAccess() {
           style={{ display: "none" }}
           ref={linkRef}
         ></a>
-        <button onClick={getAuth}>Grant Access</button>
+        <button
+          onClick={() => {
+            getAuth(AUTHURL + "&state=redirect");
+          }}
+        >
+          Grant Access
+        </button>
         {/* <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p> */}
