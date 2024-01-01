@@ -19,7 +19,8 @@ function ReqAccess() {
       // localStorage.setItem("token", params.get("access_token"));
       console.log("HERE");
       if (window.opener) {
-        window.opener.postMessage(params);
+        console.log("window.opener: ", window.opener);
+        window.opener.postMessage(params.get("access_token"));
         window.close();
       }
       // navigate("/stream");
