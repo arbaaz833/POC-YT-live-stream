@@ -5,18 +5,24 @@ import "./_App.css";
 import liveStreamService from "./services";
 import { CLIENT_ID, REDIRECT_URI } from "./config/config";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useGetAccess } from "./hooks/useGetAccess";
 
 function ReqAccess() {
   const linkRef = useRef();
   const { hash } = useLocation();
   const navigate = useNavigate();
+  const getAuth = useGetAccess(true);
 
   useEffect(() => {
     const params = new URLSearchParams("?" + hash.slice(1));
     if (params.get("access_token")) {
-      localStorage.setItem("token", params.get("access_token"));
+      // localStorage.setItem("token", params.get("access_token"));
       console.log("HERE");
-      navigate("/stream");
+      if (window.opener) {
+        window.opener.postMessage(params);
+        window.close();
+      }
+      // navigate("/stream");
     }
   }, []);
 
@@ -43,7 +49,7 @@ function ReqAccess() {
           style={{ display: "none" }}
           ref={linkRef}
         ></a>
-        <button onClick={reqAccess}>Grant Access</button>
+        <button onClick={getAuth}>Grant Access</button>
         {/* <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p> */}
