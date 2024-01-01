@@ -53,7 +53,7 @@ function ReqAccess() {
         ></a>
         <button
           onClick={() => {
-            getAuth(AUTHURL + "&state=redirect");
+            getAuth(AUTHURL);
           }}
         >
           Grant Access
