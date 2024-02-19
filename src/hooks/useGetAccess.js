@@ -5,7 +5,7 @@ export const useGetAccess = () => {
   const navigate = useNavigate();
 
   const reAuth = (url) => {
-    const authPopup = window.open(url, "popup", "popup=true");
+    window.open(url, "popup", "popup=true");
     window.addEventListener("message", (event) => {
       console.log("event: ", event);
       if (event.data === "redirect") {
