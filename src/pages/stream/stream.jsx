@@ -14,6 +14,7 @@ export default function Stream() {
   const ws = useRef();
   const WsUrl = process.env.REACT_APP_SERVERURL;
   const streamUrl = `https://youtube.com/live/${eventId}`;
+  //jhjh
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
   let liveStream;
