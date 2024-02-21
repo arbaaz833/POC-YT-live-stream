@@ -12,7 +12,7 @@ export default function Stream() {
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
-  const WsUrl = "ws://0.tcp.in.ngrok.io:14847";
+  const WsUrl = "wss://0.tcp.in.ngrok.io:14847";
   const streamUrl = `https://youtube.com/live/${eventId}`;
   //jhjh
 
