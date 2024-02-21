@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Stream from "./pages/stream/stream.jsx";
 import ReqAccess from "./requestAccess.jsx";
 import { ToastContainer } from "react-toastify";
-import StreamNative from "./pages/stream/streamNative.jsx";
+import Stream from "./pages/stream/stream.jsx";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: "stream",
-    element: <StreamNative />,
+    element: <Stream />,
   },
 ]);
 
