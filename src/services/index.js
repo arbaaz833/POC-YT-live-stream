@@ -56,7 +56,7 @@ const liveStreamService = {
     try {
       let event = await axios({
         method: "POST",
-        url: `/youtube/v3/liveBroadcasts/cuepoint?part=id&id=${eventId}`,
+        url: `/youtube/v3/liveBroadcasts/cuepoint?id=${eventId}`,
         data: data,
       });
       return event.data;
