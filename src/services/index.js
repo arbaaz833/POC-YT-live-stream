@@ -52,6 +52,18 @@ const liveStreamService = {
       console.log("e: ", e);
     }
   },
+  addCuepoint: async (eventId, data) => {
+    try {
+      let event = await axios({
+        method: "POST",
+        url: `/youtube/v3/liveBroadcasts/cuepoint?part=id,durationSecs&id=${eventId}`,
+        data: data,
+      });
+      return event.data;
+    } catch (e) {
+      console.log("e: ", e);
+    }
+  },
 };
 
 export default liveStreamService;

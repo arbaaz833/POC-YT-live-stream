@@ -12,9 +12,8 @@ export default function Stream() {
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
-  const WsUrl = "https://167d-2400-adc1-14c-5e00-ad07-937f-a7d1-1842.ngrok-free.app/";
+  const WsUrl = "https://8f85-2400-adc1-14c-5e00-3c4e-1357-4063-70c0.ngrok-free.app ";
   const streamUrl = `https://youtube.com/live/${eventId}`;
-  //jhjh
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
   let liveStream;
@@ -71,6 +70,20 @@ export default function Stream() {
     },
     [eventId, streamId]
   );
+
+  const addBreak = useCallback(async () => {
+    try {
+      const data = {
+        cueType: "cueTypeAd",
+        durationSecs: 120,
+        insertionOffsetTimeMs: 5000,
+      };
+      await liveStreamService.addCuepoint(eventId, data);
+      notify.success("break added!");
+    } catch (e) {
+      console.log("e: ", e);
+    }
+  }, [eventId]);
 
   const startStream = useCallback(async () => {
     try {
@@ -159,6 +172,9 @@ export default function Stream() {
         }}
       >
         GO LIVE
+      </button>
+      <button disabled={!isLive} onClick={addBreak}>
+        ADD BREAK
       </button>
       <button
         disabled={!isLive}
