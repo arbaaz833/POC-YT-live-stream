@@ -12,7 +12,7 @@ const liveStreamService = {
       console.log("EVENT", event.data);
       return event.data;
     } catch (e) {
-      console.log("e: ", e);
+      throw new Error(e);
     }
   },
   transitionEvent: async (data) => {
@@ -25,7 +25,7 @@ const liveStreamService = {
         }`,
       });
     } catch (e) {
-      console.log("e: ", e);
+      throw new Error(e);
     }
   },
   addStream: async (data) => {
@@ -38,7 +38,7 @@ const liveStreamService = {
       console.log("STREAM", stream.data);
       return stream.data;
     } catch (e) {
-      console.log("e: ", e);
+      throw new Error(e);
     }
   },
   bindStreamWithEvent: async (eventId, streamId) => {
@@ -49,7 +49,7 @@ const liveStreamService = {
       });
       return event.data;
     } catch (e) {
-      console.log("e: ", e);
+      throw new Error(e);
     }
   },
   addCuepoint: async (eventId, data) => {
@@ -61,7 +61,7 @@ const liveStreamService = {
       });
       return event.data;
     } catch (e) {
-      console.log("e: ", e);
+      throw new Error(e);
     }
   },
 };

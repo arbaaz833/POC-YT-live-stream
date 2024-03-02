@@ -12,7 +12,7 @@ export default function Stream() {
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
-  const WsUrl = "https://14eb-2400-adc1-14c-5e00-3c4e-1357-4063-70c0.ngrok-free.app";
+  const WsUrl = process.env.VITE_WSURL;
   const streamUrl = `https://youtube.com/live/${eventId}`;
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
