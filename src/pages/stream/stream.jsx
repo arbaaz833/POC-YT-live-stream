@@ -12,7 +12,7 @@ export default function Stream() {
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
-  const WsUrl = process.env.VITE_WSURL;
+  const WsUrl = import.meta.env.VITE_WSURL;
   const streamUrl = `https://youtube.com/live/${eventId}`;
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
