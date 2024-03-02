@@ -12,7 +12,7 @@ export default function Stream() {
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
-  const WsUrl = import.meta.env.WSURL;
+  const WsUrl = import.meta.env.VITE_WSURL;
   const streamUrl = `https://youtube.com/live/${eventId}`;
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
@@ -38,7 +38,7 @@ export default function Stream() {
       console.log("NO MICROPHONE OR CAMERA DETTECTED");
       return;
     }
-    console.log("CHECK", import.meta.env);
+    console.log("CHECK", import.meta.env.VITE_WSURL);
     navigator.mediaDevices
       .getUserMedia({
         audio: true,
