@@ -38,7 +38,7 @@ export default function Stream() {
       console.log("NO MICROPHONE OR CAMERA DETTECTED");
       return;
     }
-    console.log("CHECK", import.meta);
+    console.log("CHECK", import.meta.env);
     navigator.mediaDevices
       .getUserMedia({
         audio: true,
