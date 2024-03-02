@@ -13,4 +13,7 @@ export default defineConfig({
       "Cross-Origin-Embedder-Policy": "require-corp",
     },
   },
+  define: {
+    "process.env.VITE_WSURL": process.env.VITE_WSURL,
+  },
 });
