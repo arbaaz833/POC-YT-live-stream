@@ -78,7 +78,7 @@ export default function Stream() {
       const data = {
         cueType: "cueTypeAd",
         durationSecs: 120,
-        insertionOffsetTimeMs: 5000,
+        walltimeMs: Date.now() + 5000,
       };
       await liveStreamService.addCuepoint(eventId, data);
       notify.success("break added!");
