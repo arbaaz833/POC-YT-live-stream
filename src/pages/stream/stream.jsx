@@ -67,6 +67,7 @@ export default function Stream() {
         notify.success(`Stream is ${status === "live" ? "live" : "ended"}`);
       } catch (e) {
         console.log("e: ", e);
+        notify.error("error");
       }
     },
     [eventId, streamId]
@@ -77,12 +78,12 @@ export default function Stream() {
       const data = {
         cueType: "cueTypeAd",
         durationSecs: 120,
-        walltimeMs: Date.now() + 5000,
       };
       await liveStreamService.addCuepoint(eventId, data);
       notify.success("break added!");
     } catch (e) {
       console.log("e: ", e);
+      notify.error("error");
     }
   }, [eventId]);
 
@@ -101,7 +102,7 @@ export default function Stream() {
           recordFromStart: true,
           enableAutoStart: false,
           monitorStream: {
-            enableMonitorStream: false,
+            enableMonitorStream: true,
           },
           latencyPreference: "ultraLow",
         },
@@ -166,6 +167,14 @@ export default function Stream() {
 
       <button disabled={!stream} onClick={startStream}>
         Start Stream
+      </button>
+      <button
+        disabled={!eventId || !streamId}
+        onClick={() => {
+          makeTransition("testing");
+        }}
+      >
+        test stream
       </button>
       <button
         disabled={!eventId || !streamId}
