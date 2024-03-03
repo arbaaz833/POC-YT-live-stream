@@ -103,6 +103,7 @@ export default function Stream() {
           monitorStream: {
             enableMonitorStream: false,
           },
+          enableLowLatency: true,
         },
       };
 
