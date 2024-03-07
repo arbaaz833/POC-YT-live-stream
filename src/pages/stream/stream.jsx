@@ -48,7 +48,7 @@ export default function Stream() {
       })
       .then((stream) => {
         setStream(stream);
-        videoElem.current.src = stream;
+        videoElem.current.srcObject = stream;
         // videoElem.current.src = "/break.mp4";
         videoElem.current.play();
       });
