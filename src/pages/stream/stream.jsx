@@ -48,7 +48,8 @@ export default function Stream() {
       })
       .then((stream) => {
         setStream(stream);
-        videoElem.current.srcObject = stream;
+        // videoElem.current.src = ;
+        videoElem.current.src = "/break.mp4";
         videoElem.current.play();
       });
   }, []);
@@ -101,10 +102,10 @@ export default function Stream() {
       // await liveStreamService.addCuepoint(eventId, data);
       videoElem.current.src = "/break.mp4";
       videoElem.current.loop = true;
-      liveStreamRecorder.current.pause();
+      videoElem.current.play();
+      liveStreamRecorder.current.stop();
       breakVid.current.play();
       breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25), {
-        mimeType: "video/webm;codecs=h264",
         videoBitsPerSecond: 3 * 1024 * 1024,
       });
       breakRecorder.current.ondataavailable = (e) => {
