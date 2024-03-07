@@ -8,7 +8,9 @@ export default function Stream() {
   const [stream, setStream] = useState(undefined);
   const [eventId, setEventId] = useState(undefined);
   const [streamId, setStreamId] = useState(undefined);
+  const [isBreakAdded, setIsBreakAdded] = useState(false);
   const [isLive, setIsLive] = useState(undefined);
+  const breakVid = useRef();
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
@@ -18,6 +20,7 @@ export default function Stream() {
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
   let liveStream;
   let liveStreamRecorder;
+  let breakRecorder;
 
   useEffect(() => {
     ws.current = io(WsUrl + streamUrlParams);
@@ -73,20 +76,45 @@ export default function Stream() {
     [eventId, streamId]
   );
 
-  const addBreak = useCallback(async () => {
+  const endBreak = async () => {
     try {
-      const data = {
-        cueType: "cueTypeAd",
-        durationSecs: 120,
-        walltimeMs: Date.now() + 5000,
-      };
-      await liveStreamService.addCuepoint(eventId, data);
+      videoElem.current.srcObject = stream;
+      liveStreamRecorder.start(1000);
+      breakVid.current.pause();
+      breakRecorder.pause();
       notify.success("break added!");
+      setIsBreakAdded(false);
     } catch (e) {
       console.log("e: ", e);
       notify.error("error");
     }
-  }, [eventId]);
+  };
+
+  const addBreak = async () => {
+    try {
+      // const data = {
+      //   cueType: "cueTypeAd",
+      //   durationSecs: 120,
+      //   walltimeMs: Date.now() + 5000,
+      // };
+      // await liveStreamService.addCuepoint(eventId, data);
+      videoElem.current.srcObject =
+        "https://drive.google.com/file/d/1lAtIGHwMBAbn1sq3pi5Mpjeo726XinPM/view?usp=sharing";
+      liveStreamRecorder.pause();
+      breakVid.current.play();
+      breakRecorder = new MediaRecorder(breakVid.current.captureStream(30));
+      breakRecorder.ondataavailable = (e) => {
+        ws.current.emit("message", e.data);
+        console.log("send data", e.data);
+      };
+      breakRecorder.start(1000);
+      notify.success("break added!");
+      setIsBreakAdded(true);
+    } catch (e) {
+      console.log("e: ", e);
+      notify.error("error");
+    }
+  };
 
   const startStream = useCallback(async () => {
     try {
@@ -163,6 +191,13 @@ export default function Stream() {
       }}
     >
       {isLive ? <p>{streamUrl}</p> : null}
+      <video
+        style={{ visibility: "hidden" }}
+        ref={breakVid}
+        src="https://drive.google.com/file/d/1lAtIGHwMBAbn1sq3pi5Mpjeo726XinPM/view?usp=sharing"
+        loop
+        muted
+      />
 
       <video style={{ width: "70vw", height: "70vh" }} ref={videoElem} muted></video>
 
@@ -187,6 +222,9 @@ export default function Stream() {
       </button>
       <button disabled={!isLive} onClick={addBreak}>
         ADD BREAK
+      </button>
+      <button disabled={!isBreakAdded} onClick={endBreak}>
+        END BREAK
       </button>
       <button
         disabled={!isLive}
