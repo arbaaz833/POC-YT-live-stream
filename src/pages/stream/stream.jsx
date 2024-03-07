@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import liveStreamService from "../../services";
 import { io } from "socket.io-client";
 import { notify } from "../../notifications";
+// import breakVideo from "/break.mp4";
 
 export default function Stream() {
   const [stream, setStream] = useState(undefined);
@@ -82,7 +83,7 @@ export default function Stream() {
       liveStreamRecorder.start(1000);
       breakVid.current.pause();
       breakRecorder.pause();
-      notify.success("break added!");
+      notify.success("break ended!");
       setIsBreakAdded(false);
     } catch (e) {
       console.log("e: ", e);
@@ -98,7 +99,8 @@ export default function Stream() {
       //   walltimeMs: Date.now() + 5000,
       // };
       // await liveStreamService.addCuepoint(eventId, data);
-      videoElem.current.srcObject = "/break.mp4";
+      videoElem.current.src = "/break.mp4";
+      videoElem.current.loop = true;
       liveStreamRecorder.pause();
       breakVid.current.play();
       breakRecorder = new MediaRecorder(breakVid.current.captureStream(30));
@@ -199,32 +201,40 @@ export default function Stream() {
       />
 
       <video style={{ width: "70vw", height: "70vh" }} ref={videoElem} muted></video>
-
-      <button disabled={!stream} onClick={startStream}>
-        Start Stream
-      </button>
-      <button
-        disabled={!eventId || !streamId}
-        onClick={() => {
-          makeTransition("live");
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
         }}
       >
-        GO LIVE
-      </button>
-      <button disabled={!isLive} onClick={addBreak}>
-        ADD BREAK
-      </button>
-      <button disabled={!isBreakAdded} onClick={endBreak}>
-        END BREAK
-      </button>
-      <button
-        disabled={!isLive}
-        onClick={() => {
-          makeTransition("complete");
-        }}
-      >
-        END STREAM
-      </button>
+        <button disabled={!stream} onClick={startStream}>
+          Start Stream
+        </button>
+        <button
+          disabled={!eventId || !streamId}
+          onClick={() => {
+            makeTransition("live");
+          }}
+        >
+          GO LIVE
+        </button>
+        <button disabled={!isLive} onClick={addBreak}>
+          ADD BREAK
+        </button>
+        <button disabled={!isBreakAdded} onClick={endBreak}>
+          END BREAK
+        </button>
+        <button
+          disabled={!isLive}
+          onClick={() => {
+            makeTransition("complete");
+          }}
+        >
+          END STREAM
+        </button>
+      </div>
     </div>
   );
 }
