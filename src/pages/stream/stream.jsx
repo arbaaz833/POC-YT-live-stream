@@ -98,8 +98,7 @@ export default function Stream() {
       //   walltimeMs: Date.now() + 5000,
       // };
       // await liveStreamService.addCuepoint(eventId, data);
-      videoElem.current.srcObject =
-        "https://drive.google.com/file/d/1lAtIGHwMBAbn1sq3pi5Mpjeo726XinPM/view?usp=sharing";
+      videoElem.current.srcObject = "/break.mp4";
       liveStreamRecorder.pause();
       breakVid.current.play();
       breakRecorder = new MediaRecorder(breakVid.current.captureStream(30));
@@ -131,7 +130,7 @@ export default function Stream() {
           recordFromStart: true,
           enableAutoStart: false,
           monitorStream: {
-            enableMonitorStream: true,
+            enableMonitorStream: false,
           },
           latencyPreference: "ultraLow",
         },
@@ -192,9 +191,9 @@ export default function Stream() {
     >
       {isLive ? <p>{streamUrl}</p> : null}
       <video
-        style={{ visibility: "hidden" }}
+        style={{ visibility: "hidden", position: "absolute", zIndex: "-100" }}
         ref={breakVid}
-        src="https://drive.google.com/file/d/1lAtIGHwMBAbn1sq3pi5Mpjeo726XinPM/view?usp=sharing"
+        src="/break.mp4"
         loop
         muted
       />
@@ -203,14 +202,6 @@ export default function Stream() {
 
       <button disabled={!stream} onClick={startStream}>
         Start Stream
-      </button>
-      <button
-        disabled={!eventId || !streamId}
-        onClick={() => {
-          makeTransition("testing");
-        }}
-      >
-        test stream
       </button>
       <button
         disabled={!eventId || !streamId}
