@@ -15,19 +15,17 @@ export default function Stream() {
   const [streamName, setStreamName] = useState(undefined);
   const videoElem = useRef();
   const ws = useRef();
+  const liveStreamRecorder = useRef();
+  const breakRecorder = useRef();
   const WsUrl = import.meta.env.VITE_WSURL;
   const streamUrl = `https://youtube.com/live/${eventId}`;
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
   let liveStream;
-  let liveStreamRecorder;
-  let breakRecorder;
 
   useEffect(() => {
     ws.current = io(WsUrl + streamUrlParams);
-
     console.log(ws.current);
-
     ws.current.on("connect", () => {
       console.log("WebSocket Open");
     });
@@ -80,9 +78,9 @@ export default function Stream() {
   const endBreak = async () => {
     try {
       videoElem.current.srcObject = stream;
-      liveStreamRecorder.start(1000);
+      liveStreamRecorder.current.start(1000);
       breakVid.current.pause();
-      breakRecorder.pause();
+      breakRecorder.current.pause();
       notify.success("break ended!");
       setIsBreakAdded(false);
     } catch (e) {
@@ -101,14 +99,14 @@ export default function Stream() {
       // await liveStreamService.addCuepoint(eventId, data);
       videoElem.current.src = "/break.mp4";
       videoElem.current.loop = true;
-      liveStreamRecorder.pause();
+      liveStreamRecorder.current.pause();
       breakVid.current.play();
-      breakRecorder = new MediaRecorder(breakVid.current.captureStream(30));
-      breakRecorder.ondataavailable = (e) => {
+      breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(30));
+      breakRecorder.current.ondataavailable = (e) => {
         ws.current.emit("message", e.data);
         console.log("send data", e.data);
       };
-      breakRecorder.start(1000);
+      breakRecorder.current.start(1000);
       notify.success("break added!");
       setIsBreakAdded(true);
     } catch (e) {
@@ -161,17 +159,17 @@ export default function Stream() {
       setStreamName(addedliveStream.cdn.ingestionInfo.streamName);
       await liveStreamService.bindStreamWithEvent(event.id, addedliveStream.id);
       liveStream = videoElem.current.captureStream(30); // 30 FPS
-      liveStreamRecorder = new MediaRecorder(liveStream, {
+      liveStreamRecorder.current = new MediaRecorder(liveStream, {
         mimeType: "video/webm;codecs=h264",
         videoBitsPerSecond: 3 * 1024 * 1024,
       });
 
-      liveStreamRecorder.ondataavailable = (e) => {
+      liveStreamRecorder.current.ondataavailable = (e) => {
         ws.current.emit("message", e.data);
         console.log("send data", e.data);
       };
       // Start recording, and dump data every second
-      liveStreamRecorder.start(1000);
+      liveStreamRecorder.current.start(1000);
       notify.success("Stream created successfully");
     } catch (e) {
       console.log("e: ", e);
