@@ -102,26 +102,25 @@ export default function Stream() {
       // };
       // await liveStreamService.addCuepoint(eventId, data);
       videoElem.current.pause();
-      liveStreamRecorder.current.stop();
+      liveStreamRecorder.current.pause();
       // videoElem.current.srcObject = null;
       // videoElem.current.src = "/break.webm";
       // videoElem.current.loop = true;
       breakVid.current.play();
-      console.log("breakVid", breakVid.current.captureStream);
+      // console.log("breakVid", breakVid.current.captureStream);
       videoElem.current.srcObject = breakVid.current.captureStream(25);
-      breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25), {
-        mimeType: "video/webm;codecs=h264",
-        videoBitsPerSecond: 3 * 1024 * 1024,
-      });
+      // breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25), {
+      //   mimeType: "video/mp4",
+      // });
       videoElem.current.play();
-      // liveStreamRecorder.current.resume();
-      console.log("STREAM", breakRecorder.current);
-      breakRecorder.current.ondataavailable = (e) => {
-        ws.current.emit("message", e.data);
-        console.log("break data", e.data);
-      };
+      liveStreamRecorder.current.resume();
+      // console.log("STREAM", breakRecorder.current);
+      // breakRecorder.current.ondataavailable = (e) => {
+      //   ws.current.emit("message", e.data);
+      //   console.log("break data", e.data);
+      // };
       // console.log("breakRecorder.current: ", breakRecorder.current);
-      breakRecorder.current.start(1000);
+      // breakRecorder.current.start(1000);
       notify.success("break added!");
       setIsBreakAdded(true);
     } catch (e) {
@@ -208,7 +207,7 @@ export default function Stream() {
       <video
         style={{ visibility: "hidden", position: "absolute", zIndex: "-100" }}
         ref={breakVid}
-        src="/break1.webm"
+        src="/break.mp4"
         loop
         muted
       />
