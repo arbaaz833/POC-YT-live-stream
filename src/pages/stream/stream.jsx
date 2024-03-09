@@ -40,6 +40,7 @@ export default function Stream() {
       console.log("NO MICROPHONE OR CAMERA DETTECTED");
       return;
     }
+    console.log("breakVid", breakVid.current.srcObject);
     console.log("CHECK", import.meta.env.VITE_WSURL);
     navigator.mediaDevices
       .getUserMedia({
@@ -101,11 +102,12 @@ export default function Stream() {
       // await liveStreamService.addCuepoint(eventId, data);
       videoElem.current.pause();
       liveStreamRecorder.current.stop();
+      videoElem.current.srcObject = null;
       videoElem.current.src = "/break.webm";
       videoElem.current.loop = true;
       videoElem.current.play();
       breakVid.current.play();
-      console.log("breakVid", breakVid.current);
+      console.log("breakVid", breakVid.current.srcObject);
       breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25), {
         mimeType: "video/webm",
         videoBitsPerSecond: 3 * 1024 * 1024,
@@ -114,6 +116,7 @@ export default function Stream() {
         ws.current.emit("message", e.data);
         console.log("break data", e.data);
       };
+      console.log("breakRecorder.current: ", breakRecorder.current);
       breakRecorder.current.start(1000);
       notify.success("break added!");
       setIsBreakAdded(true);
