@@ -108,10 +108,7 @@ export default function Stream() {
       videoElem.current.play();
       breakVid.current.play();
       console.log("breakVid", breakVid.current.srcObject);
-      breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25), {
-        mimeType: "video/webm",
-        videoBitsPerSecond: 3 * 1024 * 1024,
-      });
+      breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25));
       breakRecorder.current.ondataavailable = (e) => {
         ws.current.emit("message", e.data);
         console.log("break data", e.data);
