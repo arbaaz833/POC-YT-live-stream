@@ -79,13 +79,14 @@ export default function Stream() {
 
   const endBreak = async () => {
     try {
-      videoElem.current.srcObject = stream;
-      videoElem.current.loop = false;
-      liveStreamRecorder.current.resume();
-      breakVid.current.pause();
+      // videoElem.current.srcObject = stream;
+      // videoElem.current.loop = false;
+      // liveStreamRecorder.current.resume();
+      // breakVid.current.pause();
+      // // breakRecorder.current.stop();
+      // notify.success("break ended!");
+      // setIsBreakAdded(false);
       breakRecorder.current.stop();
-      notify.success("break ended!");
-      setIsBreakAdded(false);
     } catch (e) {
       console.log("e: ", e);
       notify.error("error");
@@ -111,7 +112,7 @@ export default function Stream() {
       breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(30));
       videoElem.current.play();
       // liveStreamRecorder.current.resume();
-      console.log("STREAM", liveStreamRecorder.current.stream);
+      console.log("STREAM", breakRecorder.current);
       breakRecorder.current.ondataavailable = (e) => {
         ws.current.emit("message", e.data);
         console.log("break data", e.data);
