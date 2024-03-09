@@ -81,7 +81,6 @@ export default function Stream() {
       videoElem.current.srcObject = stream;
       videoElem.current.loop = false;
       liveStreamRecorder.current.resume();
-      // liveStreamRecorder.current.start(1000);
       breakVid.current.pause();
       breakRecorder.current.stop();
       notify.success("break ended!");
@@ -100,12 +99,14 @@ export default function Stream() {
       //   walltimeMs: Date.now() + 5000,
       // };
       // await liveStreamService.addCuepoint(eventId, data);
-      videoElem.current.src = "/break.mp4";
+      videoElem.current.stop();
+      liveStreamRecorder.current.stop();
+      videoElem.current.src = "/break.webm";
       videoElem.current.loop = true;
       videoElem.current.play();
-      liveStreamRecorder.current.stop();
       breakVid.current.play();
       breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25), {
+        mimeType: "video/webm;codecs=h264",
         videoBitsPerSecond: 3 * 1024 * 1024,
       });
       breakRecorder.current.ondataavailable = (e) => {
@@ -199,7 +200,7 @@ export default function Stream() {
       <video
         style={{ visibility: "hidden", position: "absolute", zIndex: "-100" }}
         ref={breakVid}
-        src="/break.mp4"
+        src="/break.webm"
         loop
         muted
       />
