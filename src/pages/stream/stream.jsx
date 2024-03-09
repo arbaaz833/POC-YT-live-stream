@@ -110,7 +110,8 @@ export default function Stream() {
       console.log("breakVid", breakVid.current.captureStream);
       videoElem.current.srcObject = breakVid.current.captureStream(25);
       breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25), {
-        mimeType: "video/webm",
+        mimeType: "video/webm;codecs=h264",
+        videoBitsPerSecond: 3 * 1024 * 1024,
       });
       videoElem.current.play();
       // liveStreamRecorder.current.resume();
