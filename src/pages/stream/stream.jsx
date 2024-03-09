@@ -99,7 +99,7 @@ export default function Stream() {
       //   walltimeMs: Date.now() + 5000,
       // };
       // await liveStreamService.addCuepoint(eventId, data);
-      videoElem.current.stop();
+      videoElem.current.pause();
       liveStreamRecorder.current.stop();
       videoElem.current.src = "/break.webm";
       videoElem.current.loop = true;
