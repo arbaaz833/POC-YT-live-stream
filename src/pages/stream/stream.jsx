@@ -107,10 +107,11 @@ export default function Stream() {
       // videoElem.current.loop = true;
       breakVid.current.play();
       console.log("breakVid", breakVid.current.captureStream);
-      videoElem.current.srcObject = breakVid.current.captureStream(25);
+      videoElem.current.srcObject = breakVid.current.captureStream(30);
       // breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25));
       videoElem.current.play();
       liveStreamRecorder.current.resume();
+      console.log("STREAM", liveStreamRecorder.current.stream);
       // breakRecorder.current.ondataavailable = (e) => {
       //   ws.current.emit("message", e.data);
       //   console.log("break data", e.data);
