@@ -108,8 +108,10 @@ export default function Stream() {
       // videoElem.current.loop = true;
       breakVid.current.play();
       console.log("breakVid", breakVid.current.captureStream);
-      videoElem.current.srcObject = breakVid.current.captureStream(25);
-      breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25));
+      videoElem.current.srcObject = breakVid.current.captureStream();
+      breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(), {
+        mimeType: "video/webm",
+      });
       videoElem.current.play();
       // liveStreamRecorder.current.resume();
       console.log("STREAM", breakRecorder.current);
@@ -205,7 +207,7 @@ export default function Stream() {
       <video
         style={{ visibility: "hidden", position: "absolute", zIndex: "-100" }}
         ref={breakVid}
-        src="/break.mp4"
+        src="/break.webm"
         loop
         muted
       />
