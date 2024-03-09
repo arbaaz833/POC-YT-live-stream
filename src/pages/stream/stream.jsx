@@ -102,7 +102,7 @@ export default function Stream() {
       // };
       // await liveStreamService.addCuepoint(eventId, data);
       videoElem.current.pause();
-      liveStreamRecorder.current.pause();
+      liveStreamRecorder.current.stop();
       // videoElem.current.srcObject = null;
       // videoElem.current.src = "/break.webm";
       // videoElem.current.loop = true;
@@ -113,7 +113,7 @@ export default function Stream() {
       //   mimeType: "video/mp4",
       // });
       videoElem.current.play();
-      liveStreamRecorder.current.resume();
+      liveStreamRecorder.current.start(1000);
       // console.log("STREAM", breakRecorder.current);
       // breakRecorder.current.ondataavailable = (e) => {
       //   ws.current.emit("message", e.data);
