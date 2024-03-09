@@ -101,20 +101,21 @@ export default function Stream() {
       // };
       // await liveStreamService.addCuepoint(eventId, data);
       videoElem.current.pause();
-      liveStreamRecorder.current.stop();
-      videoElem.current.srcObject = null;
-      videoElem.current.src = "/break.webm";
-      videoElem.current.loop = true;
-      videoElem.current.play();
+      // liveStreamRecorder.current.stop();
+      // videoElem.current.srcObject = null;
+      // videoElem.current.src = "/break.webm";
+      // videoElem.current.loop = true;
       breakVid.current.play();
-      console.log("breakVid", breakVid.current.srcObject);
-      breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25));
-      breakRecorder.current.ondataavailable = (e) => {
-        ws.current.emit("message", e.data);
-        console.log("break data", e.data);
-      };
-      console.log("breakRecorder.current: ", breakRecorder.current);
-      breakRecorder.current.start(1000);
+      console.log("breakVid", breakVid.current.captureStream);
+      videoElem.current.srcObject = breakVid.current.captureStream(25);
+      // breakRecorder.current = new MediaRecorder(breakVid.current.captureStream(25));
+      videoElem.current.play();
+      // breakRecorder.current.ondataavailable = (e) => {
+      //   ws.current.emit("message", e.data);
+      //   console.log("break data", e.data);
+      // };
+      // console.log("breakRecorder.current: ", breakRecorder.current);
+      // breakRecorder.current.start(1000);
       notify.success("break added!");
       setIsBreakAdded(true);
     } catch (e) {
