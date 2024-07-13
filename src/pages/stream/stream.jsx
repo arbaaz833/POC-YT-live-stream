@@ -17,7 +17,9 @@ export default function Stream() {
   const ws = useRef();
   const liveStreamRecorder = useRef();
   const breakRecorder = useRef();
-  const WsUrl = import.meta.env.VITE_WSURL;
+  // const WsUrl = import.meta.env.VITE_WSURL;
+  const WsUrl = "http://localhost:3001";
+
   const streamUrl = `https://youtube.com/live/${eventId}`;
 
   const streamUrlParams = `?youtubeUrl=rtmps://x.rtmps.youtube.com/live2/${streamName}`;
