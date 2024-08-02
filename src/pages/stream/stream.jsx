@@ -6,7 +6,6 @@ import { notify } from "../../notifications";
 // import breakVideo from "/break.mp4";
 
 export default function Stream() {
-  console.log("In stream");
   const [stream, setStream] = useState(undefined);
   const [eventId, setEventId] = useState(undefined);
   const [streamId, setStreamId] = useState(undefined);
@@ -19,7 +18,7 @@ export default function Stream() {
   const liveStreamRecorder = useRef();
   const breakRecorder = useRef();
   // const WsUrl = import.meta.env.VITE_WSURL;
-  const WsUrl = "ws://localhost:3001";
+  const WsUrl = "http://localhost:3001";
 
   const streamUrl = `https://youtube.com/live/${eventId}`;
 
