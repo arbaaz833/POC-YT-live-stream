@@ -6,6 +6,7 @@ import { notify } from "../../notifications";
 // import breakVideo from "/break.mp4";
 
 export default function Stream() {
+  console.log("In stream");
   const [stream, setStream] = useState(undefined);
   const [eventId, setEventId] = useState(undefined);
   const [streamId, setStreamId] = useState(undefined);
