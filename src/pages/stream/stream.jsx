@@ -18,7 +18,7 @@ export default function Stream() {
   const liveStreamRecorder = useRef();
   const breakRecorder = useRef();
   // const WsUrl = import.meta.env.VITE_WSURL;
-  const WsUrl = "http://localhost:3001";
+  const WsUrl = "ws://localhost:3001";
 
   const streamUrl = `https://youtube.com/live/${eventId}`;
 
@@ -214,7 +214,11 @@ export default function Stream() {
         muted
       />
 
-      <video style={{ width: "70vw", height: "70vh" }} ref={videoElem} muted></video>
+      <video
+        style={{ width: "70vw", height: "70vh" }}
+        ref={videoElem}
+        muted
+      ></video>
       <div
         style={{
           display: "flex",
