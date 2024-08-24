@@ -60,7 +60,7 @@ function ReqAccess() {
         >
           Grant Access
         </button>
-        <button
+        {/* <button
           onClick={async () => {
             const res = await axios({
               method: "GET",
@@ -70,7 +70,7 @@ function ReqAccess() {
           }}
         >
           Endpoint test
-        </button>
+        </button> */}
         {/* <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p> */}
