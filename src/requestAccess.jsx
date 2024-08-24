@@ -6,6 +6,7 @@ import liveStreamService from "./services";
 import { AUTHURL, CLIENT_ID, REDIRECT_URI } from "./config/config";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useGetAccess } from "./hooks/useGetAccess";
+import axios from "./config/axios";
 
 function ReqAccess() {
   const linkRef = useRef();
@@ -21,7 +22,8 @@ function ReqAccess() {
       if (window.opener) {
         console.log("window.opener: ", window.opener);
         localStorage.setItem("token", params.get("access_token"));
-        if (params.get("state") === "redirect") window.opener.postMessage("redirect");
+        if (params.get("state") === "redirect")
+          window.opener.postMessage("redirect");
         window.close();
       }
       // navigate("/stream");
@@ -57,6 +59,17 @@ function ReqAccess() {
           }}
         >
           Grant Access
+        </button>
+        <button
+          onClick={async () => {
+            const res = await axios({
+              method: "GET",
+              url: "http://localhost:5001/",
+            });
+            console.log(res.data());
+          }}
+        >
+          Endpoint test
         </button>
         {/* <p>
           Edit <code>src/App.jsx</code> and save to test HMR

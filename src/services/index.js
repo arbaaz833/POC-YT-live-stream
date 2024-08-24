@@ -20,7 +20,9 @@ const liveStreamService = {
       await axios({
         method: "POST",
         data: data,
-        url: `/youtube/v3/liveBroadcasts/transition?part=id${data.id ? "&id=" + data.id : ""}${
+        url: `/youtube/v3/liveBroadcasts/transition?part=id${
+          data.id ? "&id=" + data.id : ""
+        }${
           data.broadcastStatus ? "&broadcastStatus=" + data.broadcastStatus : ""
         }`,
       });
